@@ -1,32 +1,44 @@
- class MaterialBiblioteca:
-    def __init__(self, titulo, autor, anio):
-        self._titulo = titulo
-        self._autor = autor
-        self._anio = anio
-        self._disponible = True
+#correcion el llamado a clases no compilaba debido a que no se habia importado bien con el nombre
+class MaterialBiblioteca:
+    def __init__(self, titulo:str, autor:str, anio:int) -> None:
+        self.__titulo = titulo      # correcion de la proteccion de datos usando @property usando getters, no creo necesario el setter
+        self.__autor = autor        # proteccion estricta de datos
+        self.__anio = anio
+        self.__disponible = True
 
-    def get_titulo(self):
-        return self._titulo
+    #  @property decorador para getters
+    @property
+    def titulo(self) -> str:
+        return self.__titulo
 
-    def get_autor(self):
-        return self._autor
+    @property
+    def autor(self) -> str:
+        return self.__autor
 
-    def is_disponible(self):
-        return self._disponible
+    @property
+    def anio(self)-> int:
+        return self.__anio
 
-    def prestar(self):
-        if self._disponible:
-            self._disponible = False
-            print(f"✅ '{self._titulo}' ha sido prestado.")
+    @property
+    def disponible(self)-> bool:
+        return self.__disponible
+
+    # --- Métodos de negocio ---
+    def prestar(self)-> None:
+        if self.__disponible:
+            self.__disponible = False
+            print(f" '{self.__titulo}' ha sido prestado.")
         else:
-            print(f"❌ '{self._titulo}' no está disponible.")
+            print(f" '{self.__titulo}' no está disponible.")
 
-    def devolver(self):
-        if not self._disponible:
-            self._disponible = True
-            print(f"📚 '{self._titulo}' ha sido devuelto.")
+    def devolver(self)-> None:
+        if not self.__disponible:
+            self.__disponible = True
+            print(f" '{self.__titulo}' ha sido devuelto.")
         else:
-            print(f"ℹ️ '{self._titulo}' ya estaba en la biblioteca.")
+            print(f" '{self.__titulo}' ya estaba en la biblioteca.")
 
-    def mostrar_info(self):
-        return f"{self._titulo} - {self._autor} ({self._anio})"
+    def mostrar_info(self)-> str:
+        estado = "Disponible " if self._disponible else "Prestado "
+        # agregar una forma de saber el estado del libro (si esta prestado o disponible) para efectos visuales
+        return f"{self.__titulo} - {self.__autor} ({self.__anio}) | Estado: {estado}"
