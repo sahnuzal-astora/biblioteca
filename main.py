@@ -1,12 +1,12 @@
- from libro import Libro
-from revista import Revista
-from periodico import Periodico
+from Libro import Libro
+from Revista import Revista
+from Periodico import Periodico
 
 # Lista general de materiales en la biblioteca
 materiales = []
 
 def mostrar_menu():
-    print("\n===== 📚 SISTEMA DE BIBLIOTECA =====")
+    print("\n=====  SISTEMA DE BIBLIOTECA =====")
     print("1. Agregar Libro")
     print("2. Agregar Revista")
     print("3. Agregar Periódico")
@@ -24,7 +24,7 @@ def agregar_libro():
     paginas = input("Número de páginas: ")
     libro = Libro(titulo, autor, anio, genero, paginas)
     materiales.append(libro)
-    print("✅ Libro agregado.")
+    print(" Libro agregado.")
 
 def agregar_revista():
     titulo = input("Título: ")
@@ -33,7 +33,7 @@ def agregar_revista():
     edicion = input("Número de edición: ")
     revista = Revista(titulo, autor, anio, edicion)
     materiales.append(revista)
-    print("✅ Revista agregada.")
+    print(" Revista agregada.")
 
 def agregar_periodico():
     titulo = input("Título: ")
@@ -42,11 +42,11 @@ def agregar_periodico():
     fecha = input("Fecha de publicación: ")
     periodico = Periodico(titulo, autor, anio, fecha)
     materiales.append(periodico)
-    print("✅ Periódico agregado.")
+    print(" Periódico agregado.")
 
 def mostrar_materiales():
     if not materiales:
-        print("⚠️ No hay materiales registrados.")
+        print(" No hay materiales registrados.")
     else:
         for i, mat in enumerate(materiales, start=1):
             print(f"{i}. {mat.mostrar_info()}")
@@ -58,7 +58,7 @@ def prestar_material():
         if 1 <= opcion <= len(materiales):
             materiales[opcion-1].prestar()
         else:
-            print("❌ Opción inválida.")
+            print(" Opción inválida.")
 
 def devolver_material():
     mostrar_materiales()
@@ -67,17 +67,17 @@ def devolver_material():
         if 1 <= opcion <= len(materiales):
             materiales[opcion-1].devolver()
         else:
-            print("❌ Opción inválida.")
+            print(" Opción inválida.")
 
 def buscar_por_autor():
     autor = input("Ingrese el nombre del autor: ")
     encontrados = [m for m in materiales if m.get_autor().lower() == autor.lower()]
     if encontrados:
-        print("🔎 Materiales encontrados:")
+        print(" Materiales encontrados:")
         for m in encontrados:
             print(m.mostrar_info())
     else:
-        print("❌ No se encontraron materiales de ese autor.")
+        print(" No se encontraron materiales de ese autor.")
 
 def main():
     while True:
@@ -99,10 +99,10 @@ def main():
         elif opcion == "7":
             buscar_por_autor()
         elif opcion == "0":
-            print("👋 Saliendo del sistema...")
+            print(" Saliendo del sistema...")
             break
         else:
-            print("❌ Opción inválida.")
+            print(" Opción inválida.")
 
 if __name__ == "__main__":
     main()
