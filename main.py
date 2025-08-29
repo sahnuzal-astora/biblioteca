@@ -1,12 +1,30 @@
- from libro import Libro
-from revista import Revista
-from periodico import Periodico
+from Libro import Libro
+from Revista import Revista
+from Periodico import Periodico
 
 # Lista general de materiales en la biblioteca
 materiales = []
 
-def mostrar_menu():
-    print("\n===== 📚 SISTEMA DE BIBLIOTECA =====")
+# ================= VALIDADORES =================
+def pedir_entero(mensaje)-> int:
+    """Solicita un entero y no permite salir hasta que lo ingrese bien"""
+    valor = input(mensaje)
+    while not valor.isdigit():   #  valida si la entrada son solo dígitos
+        print(" Error: Debe ingresar un número entero.")
+        valor = input(mensaje)
+    return int(valor)
+
+def pedir_texto(mensaje)-> str:
+    """Solicita un texto no vacío"""
+    valor = input(mensaje).strip()
+    while not valor:  # evita que quede vacío
+        print(" Error: No puede estar vacío.")
+        valor = input(mensaje).strip()
+    return valor
+
+# ================= MENÚ =================
+def mostrar_menu()-> None:
+    print("\n=====  SISTEMA DE BIBLIOTECA =====")
     print("1. Agregar Libro")
     print("2. Agregar Revista")
     print("3. Agregar Periódico")
@@ -16,73 +34,77 @@ def mostrar_menu():
     print("7. Buscar por Autor")
     print("0. Salir")
 
-def agregar_libro():
-    titulo = input("Título: ")
-    autor = input("Autor: ")
-    anio = input("Año: ")
-    genero = input("Género: ")
-    paginas = input("Número de páginas: ")
+# ================= AGREGAR =================
+def agregar_libro()-> None:
+    titulo = pedir_texto("Título: ")   
+    autor = pedir_texto("Autor: ")     
+    anio = pedir_entero("Año: ")       
+    genero = pedir_texto("Género: ")   
+    paginas = pedir_entero("Número de páginas: ")  
     libro = Libro(titulo, autor, anio, genero, paginas)
     materiales.append(libro)
-    print("✅ Libro agregado.")
+    print("  Libro agregado.")
 
-def agregar_revista():
-    titulo = input("Título: ")
-    autor = input("Autor: ")
-    anio = input("Año: ")
-    edicion = input("Número de edición: ")
+def agregar_revista()-> None:
+    titulo = pedir_texto("Título: ")   
+    autor = pedir_texto("Autor: ")    
+    anio = pedir_entero("Año: ")       
+    edicion = pedir_entero("Número de edición: ")  
     revista = Revista(titulo, autor, anio, edicion)
     materiales.append(revista)
-    print("✅ Revista agregada.")
+    print(" Revista agregada.")
 
-def agregar_periodico():
-    titulo = input("Título: ")
-    autor = input("Autor: ")
-    anio = input("Año: ")
-    fecha = input("Fecha de publicación: ")
+def agregar_periodico()-> None:
+    titulo = pedir_texto("Título: ")   
+    autor = pedir_texto("Autor: ")     
+    anio = pedir_entero("Año: ")       
+    fecha = pedir_texto("Fecha de publicación (dd/mm/aaaa): ")  
     periodico = Periodico(titulo, autor, anio, fecha)
     materiales.append(periodico)
-    print("✅ Periódico agregado.")
+    print("  Periódico agregado.")
 
-def mostrar_materiales():
+# ================= MOSTRAR =================
+def mostrar_materiales()-> None:
     if not materiales:
-        print("⚠️ No hay materiales registrados.")
+        print(" ⚠ No hay materiales registrados.")
     else:
         for i, mat in enumerate(materiales, start=1):
             print(f"{i}. {mat.mostrar_info()}")
 
-def prestar_material():
+# ================= OPERACIONES =================
+def prestar_material()-> None:
     mostrar_materiales()
     if materiales:
-        opcion = int(input("Seleccione el número del material a prestar: "))
+        opcion = pedir_entero("Seleccione el número del material a prestar: ")  
         if 1 <= opcion <= len(materiales):
             materiales[opcion-1].prestar()
         else:
-            print("❌ Opción inválida.")
+            print(" ⚠ Opción inválida.")
 
-def devolver_material():
+def devolver_material()-> None:
     mostrar_materiales()
     if materiales:
-        opcion = int(input("Seleccione el número del material a devolver: "))
+        opcion = pedir_entero("Seleccione el número del material a devolver: ")  
         if 1 <= opcion <= len(materiales):
             materiales[opcion-1].devolver()
         else:
-            print("❌ Opción inválida.")
+            print(" ⚠ Opción inválida.")
 
-def buscar_por_autor():
-    autor = input("Ingrese el nombre del autor: ")
-    encontrados = [m for m in materiales if m.get_autor().lower() == autor.lower()]
+def buscar_por_autor()-> None:
+    autor = pedir_texto("Ingrese el nombre del autor: ")  
+    encontrados = [m for m in materiales if m.autor.lower() == autor.lower()]
     if encontrados:
-        print("🔎 Materiales encontrados:")
+        print(" Materiales encontrados:")
         for m in encontrados:
             print(m.mostrar_info())
     else:
-        print("❌ No se encontraron materiales de ese autor.")
+        print(" ⚠ No se encontraron materiales de ese autor.")
 
-def main():
+# ================= MAIN =================
+def main()-> None:
     while True:
         mostrar_menu()
-        opcion = input("Seleccione una opción: ")
+        opcion = input("Seleccione una opción: ").strip()
         
         if opcion == "1":
             agregar_libro()
@@ -99,10 +121,10 @@ def main():
         elif opcion == "7":
             buscar_por_autor()
         elif opcion == "0":
-            print("👋 Saliendo del sistema...")
+            print("  Saliendo del sistema...")
             break
         else:
-            print("❌ Opción inválida.")
+            print(" ⚠ Opción inválida.")
 
 if __name__ == "__main__":
     main()
