@@ -39,6 +39,6 @@ class MaterialBiblioteca:
             print(f" '{self.__titulo}' ya estaba en la biblioteca.")
 
     def mostrar_info(self)-> str:
-        estado = "Disponible " if self._disponible else "Prestado "
+        estado = "Disponible " if self.__disponible else "Prestado "
         # agregar una forma de saber el estado del libro (si esta prestado o disponible) para efectos visuales
         return f"{self.__titulo} - {self.__autor} ({self.__anio}) | Estado: {estado}"

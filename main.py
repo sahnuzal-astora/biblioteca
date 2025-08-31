@@ -1,6 +1,6 @@
 from Libro import Libro
 from Revista import Revista
-from Periodico import Periodico
+from periodico import Periodico
 
 # Lista general de materiales en la biblioteca
 materiales = []
